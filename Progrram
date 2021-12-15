@@ -1,0 +1,65 @@
+using System;
+using System.Windows.Forms;
+
+namespace POO_Lab8
+{
+    public partial class Form1 : Form
+    {
+        double operand1, operand2, Result;
+        string operand3, operand4;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        public class UnluckyException : Exception
+        {
+            public UnluckyException() : base("UnluckyException: divisor = 13"){}
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                operand1 = Convert.ToDouble(textBox1.Text);
+                operand2 = Convert.ToDouble(textBox2.Text);
+                Result = operand1 / operand2;
+                operand3 = Convert.ToString(operand1);
+                operand4 = Convert.ToString(operand2);
+
+                if (operand2 == 13)
+                {
+                    throw new UnluckyException();
+                }
+
+                else if (double.IsInfinity(Result) || double.IsNaN(Result) || !int.TryParse(operand3, out int num) || !int.TryParse(operand4, out int number))
+                {
+                    throw new ArithmeticException();
+                }
+
+                else
+                {
+                    label4.Text = " ";
+                }
+                textBox3.Text = Result.ToString();
+            }
+            catch (FormatException)
+            {
+                label4.Text = "Please insert integer values!";
+                textBox3.Text = " ";
+            }
+            catch (UnluckyException)
+            {
+                label4.Text = "I don't like the number 13, divide by another number pls!";
+                textBox3.Text = " ";
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = " ";
+            textBox2.Text = " ";
+            textBox3.Text = " ";
+            label4.Text = " ";
+        }
+    }
+}
